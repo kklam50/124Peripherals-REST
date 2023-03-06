@@ -68,8 +68,6 @@
                 ResultSet resultSet = statement.executeQuery("SELECT * FROM products");
     
                 String textResp = "";
-                
-                String portNum = "8080"; //String.valueOf(req.getServerPort());
     
                 while (resultSet.next()) {
                     String productID = resultSet.getString("productID");
@@ -116,7 +114,8 @@
                             </div>
                             </div>
                         </div>
-                        <a href="product?productID= + productID %> class="stretched-link"></a>
+                        <%-- not too sure how to route it to /product instead of /product.jsp --%>
+                        <a href="product.jsp?productID=<%= productID %>"  class="stretched-link"></a>
                     </div>
                     <%
                 }

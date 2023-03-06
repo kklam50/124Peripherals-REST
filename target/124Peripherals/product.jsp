@@ -51,7 +51,104 @@
                 <div id="page-content">
                     
                     <div id="product-content" class="wrapper row content">
-                        ${productInfo}
+                        <%@page import = "java.sql.Connection"%>
+                        <%@page import = "java.sql.DriverManager"%>
+                        <%@page import = "java.sql.ResultSet"%>
+                        <%@page import = "java.sql.Statement"%>
+                        <%@page import = "javax.servlet.http.*"%>
+                        <% 
+                        Connection con;
+                        final String JBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+                        final String DB_URL = "jdbc:mysql://localhost:3306/jdbc-products";
+                        
+                        try {
+                            String productID = request.getParameter("productID");
+
+                            Class.forName(JBC_DRIVER);
+                            con = DriverManager.getConnection(DB_URL, "root", "root");
+
+                            Statement statement = con.createStatement();
+                            
+                            ResultSet resultSet = statement.executeQuery("SELECT * FROM products WHERE productID = " + productID);
+                            
+                            String textResp = "";
+                            
+                            String portNum = "8080"; //String.valueOf(req.getServerPort());
+                            
+                            while (resultSet.next()) {
+                                String productName = resultSet.getString("productName");
+                                String productImgSource = "http://localhost:8080/124Peripherals/assets/" + resultSet.getString("productImgName");
+                                String productBrand = resultSet.getString("productBrand");
+                                String productPrice = resultSet.getString("productPrice");
+                                int productRating = Integer.valueOf(resultSet.getString("productRating"));
+                                String productReviewNum = resultSet.getString("productReviewNum");
+                                String productDescription = resultSet.getString("productDescription");
+                                String productSensor = resultSet.getString("productSensor");
+                                String productWeight = resultSet.getString("productWeight");
+                                String productColor = resultSet.getString("productColor");
+                                String productMaterial = resultSet.getString("productMaterial");
+                                
+                                %>
+                                <div id="product-images" class="col-md-6">
+                                    <div class="preview">
+                                        <div class="tab-pane active" id="product-pic"><img class="img-fluid" src= <%= productImgSource %> ></div>
+                                    </div>
+                                </div>
+                                <div id="product-info" class="col-md-6">
+                                    <h3 id="product-name" class="product-title fw-bold"><%= productName %></h3>
+                                    <p class="product-company fw-light"><%= productBrand %></p>
+                                    <div id="product-rating" class="d-flex align-items-start">
+                                        <% 
+                                        int starCounter = 0;
+                                        for (int i = 0; i < 5; i++) {
+                                            if (starCounter < productRating) {
+                                                starCounter += 1;
+                                                %> 
+                                                <div class="p-0">
+                                                    <i class="bi bi-star-fill"></i>
+                                                </div> 
+                                                <%
+                                            }
+                                            else {
+                                                %> 
+                                                <div class="p-0">
+                                                    <i class="bi bi-star"></i>
+                                                </div> 
+                                                <%
+                                            }
+                                        }
+                                        %> 
+                                        <div class="p-0">
+                                            <span class="product-reviews align-right">&nbsp&nbsp</span>
+                                        </div>
+                                        <div class="p-0">
+                                            <span class="product-reviews align-right"> <%= productReviewNum %> reviews</span>
+                                        </div>
+                                    </div>
+                                    <h4 class="d-inline product-price fw-bold">Price: </h4>
+                                    <h5 class="d-inline product-price fw-bold">$<%= productPrice %> </h5>
+                                    <h4 class="product-description">Product Description</h4>
+                                    <p class="product-description">
+                                        <%= productDescription %> 
+                                    </p>
+                                    <h4 class="product-description">Specs</h4>
+                                    <ul class="product-description">
+                                        <li class="product-description">Sensor: <%= productSensor %> </li>
+                                        <li class="product-description">Weight: <%= productWeight %> </li>
+                                        <li class="product-description">Color: <%= productColor %> </li>
+                                        <li class="product-description">Shell Material: <%= productMaterial %> </li>
+                                    </ul>
+                                    <label for="Quantity">Quantity: </label>
+                                        <input type="number" id="Quantity" class="col-md-1 text-align:left" min="1" max="10" value=1 required>
+                                        <button onclick="sendProduct()" id="addToCartButton" class="col-md-3">Add To Cart</button>
+                                </div>
+                                <%
+                            }
+                        }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        %>
                     </div>
 
                 </div>

@@ -1,6 +1,0 @@
-com\servlets\AddCartServlet.class
-com\servlets\DisplayCartContentsServlet.class
-com\servlets\DisplayProductsServlet.class
-com\servlets\SubmitOrderServlet.class
-com\servlets\DisplayProductPageServlet.class
-com\servlets\ProductRatingsServlet.class

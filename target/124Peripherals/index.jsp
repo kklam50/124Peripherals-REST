@@ -34,7 +34,7 @@
         <div class="topnav-right">
             <ul class="nav nav-pills justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link" href="/124Peripherals/cart">
+                    <a class="nav-link" href="/124Peripherals/cart.jsp">
                         <i class="bi bi-cart4"></i>
                         My Shopping Cart
                     </a>

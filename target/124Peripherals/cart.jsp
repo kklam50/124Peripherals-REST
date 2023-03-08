@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,6 +19,7 @@
 
     <title>124 PC Peripherals</title>
 
+
 </head>
 
 <body>
@@ -35,7 +37,7 @@
         <div class="topnav-right">
             <ul class="nav nav-pills justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link" href="/124Peripherals/cart">
+                    <a class="nav-link" href="/124Peripherals/cart.jsp">
                         <i class="bi bi-cart4"></i>
                         My Shopping Cart
                     </a>
@@ -43,16 +45,104 @@
             </ul>
         </div>
     </nav>
+
     <div class="container">
         <div class="card border-0">
             <div class="container-fluid">
                 <div id="page-content">
-                
                     <div id="product-content" class="wrapper row content">
-                        ${cartInfo}
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Item</th>
+                                    <th scope="col"></th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <%@page import = "java.sql.Connection" %>
+                            <%@page import = "java.sql.DriverManager" %>
+                            <%@page import = "java.sql.ResultSet" %>
+                            <%@page import = "java.sql.SQLException" %>
+                            <%@page import = "java.sql.Statement" %>
+                            <%@page import = "java.util.ArrayList" %>
+                            <%@page import = "java.util.Map" %>
+                            <%@page import = "java.text.DecimalFormat" %>
+                            
+                            <%
+                            Connection con;
+                            final String JBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+                            final String DB_URL = "jdbc:mysql://localhost:3306/jdbc-products";
+                            final DecimalFormat df = new DecimalFormat("0.00");
+
+                            Class.forName(JBC_DRIVER);
+                            con = DriverManager.getConnection(DB_URL, "root", "root");
+                            Statement statement = con.createStatement();
+
+
+                            try {
+                                String textResp = "";
+                                double totalPrice = 0.0;
+                                String portNum = String.valueOf(request.getServerPort());
+
+                                if (session.getAttribute("products") == null) {
+                                    textResp = "<h2>Your cart is empty!</h2>\r\n";
+                                }
+
+                                Map<String, Integer> cart = (Map)session.getAttribute("products");
+                                ArrayList<String> names = new ArrayList<String>();
+                                ArrayList<String> images = new ArrayList<String>();
+                                ArrayList<Float> prices = new ArrayList<Float>();
+                                ArrayList<Integer> quantities = new ArrayList<Integer>();
+                                ArrayList<Double> totalPrices = new ArrayList<Double>();
+
+                                if (cart != null) {
+                                    for (Map.Entry<String, Integer> cartEntry : cart.entrySet()) {
+                                        ResultSet resultSet = statement.executeQuery("SELECT * FROM products WHERE productName = \"" + cartEntry.getKey() + "\"");
+                                        resultSet.next();
+                                        String productName = resultSet.getString("productName");
+                                        String productImgSource = "http://localhost:" + portNum + "/124Peripherals/assets/" + resultSet.getString("productImgName");
+                                        Float productPrice = Float.parseFloat(resultSet.getString("productPrice")) * cartEntry.getValue();
+
+                                        names.add(productName);
+                                        images.add(productImgSource);
+                                        quantities.add(cartEntry.getValue());
+                                        prices.add(Float.parseFloat(resultSet.getString("productPrice")));
+                                        totalPrices.add(Math.round(Double.parseDouble(productPrice.toString())* 100.0)/ 100.0);
+                                        totalPrice += Double.parseDouble(productPrice.toString());
+                                    }
+                                }
+                                %>
+                                <h1>Total Price: $ <%= df.format(Math.round(totalPrice * 100.00)/100.00) %></h1>
+                                <%
+                                for (int i = 0; i < names.size(); i++) {   %>
+                                
+                                    <tr>
+                                        <th scope="row"> <%= names.get(i) %> </th>
+                                        <td>
+                                            <img src="<%= images.get(i) %>" class="card-img-top img-fluid" alt="<%= images.get(i) %>" title="<%= images.get(i) %>" style="width:100px;height:100px;" >
+                                        </td>
+                                        <td><%= prices.get(i) %></td>
+                                        <td><%= quantities.get(i) %></td>
+                                        <td><%= totalPrices.get(i) %></td>
+                                    </tr>
+
+                                <%
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            %>
+                            </tbody>
+                        </table>
                     </div>
-                    
-                    <div class="wrapper row content">
+
+
+                </div>
+
+                <div class="wrapper row content">
                         <form class="row g-3" onsubmit="return validateOrder()" action="/124Peripherals/submitOrder">
                             <h1 id="OrderForm" style="text-align:left">Order Form</h1>
                             <div class="">
@@ -135,11 +225,8 @@
                             </div>
                         </form>
                     </div>
-                </div>
             </div>
         </div>
     </div>
-    
-        
 </body>
 </html>

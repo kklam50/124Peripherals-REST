@@ -9,12 +9,11 @@ app.use(express.static('public'));
 
 app.set("view engine", "ejs");
 
-app.get("/", (req, res) => {
-    const rows = db.query("SELECT * FROM products");
-    console.log("In App:" + rows);
-    // test.test();
-    res.render("index")
-})
+app.get("/", async function(req, res) {
+    const rows = await db.query("SELECT * FROM products");
+    console.log(typeof(rows));
+    res.render("index", { rows })
+ });
 
 app.get("/product", (req, res) => {
     res.render("product");

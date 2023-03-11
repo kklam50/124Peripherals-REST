@@ -25,7 +25,6 @@ app.get('/products', async function(req, res) {
 app.get('/products/:id', async function(req, res) {
     const productID = req.params.id;
     const results = await db.query("SELECT * FROM products WHERE productID = " + mysql.escape(productID));
-    console.log("Product clicked: " + productID);
     res.json(results);
 });
 
@@ -59,8 +58,6 @@ app.get('/recents', async function(req, res) {
             }
         }
     }
-
-    console.log(Array.from(recentProducts));
 
     res.json(Array.from(recentProducts));
 });

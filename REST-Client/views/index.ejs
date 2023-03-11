@@ -49,9 +49,7 @@
         </div>
     	
         <div class="row justify-content-center" id="product-grid">
-            <%= rows[0].productName %>
-            <% rows.forEach(function (element) {
-                console.log(element.productImgName);
+            <% results.forEach(function (element) {
                 %> 
                 <div title= <%= element.productName %> id=<%= element.productName %> class="card border-0 hovereffect" style="width: 20rem">
                     <img src="assets/<%= element.productImgName %>" class="card-img-top img-fluid" alt=<%= element.productName %> title=<%= element.productName %>>

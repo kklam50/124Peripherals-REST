@@ -11,7 +11,22 @@ app.set("view engine", "ejs");
 
 app.get("/", async function(req, res) {
     const results = await db.query("SELECT * FROM products");
-    res.render("index", { results })
+    const recentOrders = await db.query("SELECT * FROM orders ORDER BY orderNumber DESC");
+    let recentProducts = new Set();
+
+    for (var i = 0; (i < recentOrders.length && recentProducts.size < 5) ; i++) {
+        const regex = /(.)(?=:)/g;
+        var orderContents = recentOrders[i].orderItems;
+        var items = orderContents.match(regex);
+
+        for (item of items) {
+            if (recentProducts.size < 5) {
+                recentProducts.add(item);
+            }
+        }
+    }
+    
+    res.render("index", { results, recentProducts })
  });
 
 app.get("/product", (req, res) => {

@@ -97,7 +97,30 @@
             <h2>Rate these recent orders!</h2>
         </div>
         <div class="row justify-content-center" id="product-grid">
-            RECENT ORDERS HERE
+            <% let productCounter = 0 %>
+            <% recentProducts.forEach(function (element) { 
+                productCounter++;
+                console.log(results[element].productName);
+                %>
+                <div title=<%= results[element].productName %> id=<%= results[element].productName %> class="card border-0 hovereffect" style="width: 20rem"> 
+                    <img src="assets/<%= results[element].productImgName %>" class="card-img-top img-fluid" alt="<%= results[element].productName %>" title="<%= results[element].productName %>">
+                    <div class="card-body">
+                        <p class="product-title fw-bold"><%= results[element].productName %></p>
+                        <div class="d-flex align-items-center">
+                            <table>
+                                <tr>
+                                    <th>
+                                        <label class="rating-label">
+                                            <input id="rating<%= productCounter %>" class="rating rating--nojs" max="5" step="1" type="range" value="0">
+                                        </label>
+                                    </th>
+                                </tr>
+                                <tr><th><button id="sendRatingButton" class="btn btn-success">Rate</button></th></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div> <%
+            }) %>
         </div>
     </div>
 

@@ -100,7 +100,6 @@
             <% let productCounter = 0 %>
             <% recentProducts.forEach(function (element) { 
                 productCounter++;
-                console.log(results[element].productName);
                 %>
                 <div title=<%= results[element].productName %> id=<%= results[element].productName %> class="card border-0 hovereffect" style="width: 20rem"> 
                     <img src="assets/<%= results[element].productImgName %>" class="card-img-top img-fluid" alt="<%= results[element].productName %>" title="<%= results[element].productName %>">

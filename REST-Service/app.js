@@ -54,4 +54,25 @@ app.post('/order', (req, res) => {
     res.redirect("http://localhost:8080/orderDetails");
 });
 
+app.get('/recents', async function(req, res) {
+    const recentOrders = await db.query("SELECT * FROM orders ORDER BY orderNumber DESC");
+    let recentProducts = new Set();
+
+    for (var i = 0; (i < recentOrders.length && recentProducts.size < 5) ; i++) {
+        const regex = /(.)(?=:)/g;
+        var orderContents = recentOrders[i].orderItems;
+        var items = orderContents.match(regex);
+
+        for (item of items) {
+            if (recentProducts.size < 5) {
+                recentProducts.add(item);
+            }
+        }
+    }
+
+    console.log(Array.from(recentProducts));
+
+    res.json(Array.from(recentProducts));
+});
+
 app.listen(port, () => console.log(`Hello world app listening on port http://localhost:3000/ !`));

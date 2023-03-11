@@ -1,0 +1,226 @@
+body {
+    font-family: 'Tangerine', sans-serif;
+    background-color: white;
+    overflow-x: hidden;
+}
+
+/* html {
+    overflow-x: hidden;
+} */
+
+p {
+    font-family: 'Asap Condensed', sans-serif;
+}
+
+.product-description {
+    font-family: 'Asap Condensed', sans-serif;
+}
+
+/* .heading {
+    font-family: 'Zilla Slab', serif;
+} */
+
+h1, h2, h3, h4, h5{
+    /* font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif */
+    font-family: Arial, Helvetica, sans-serif
+}
+
+.button {
+    background-color: cyan;
+    border: none;
+    color: white;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+  }
+
+.navbar {
+    background: rgb(15, 26, 26);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin-bottom: 0px !important;
+    position: sticky;
+    z-index: 999;
+    top: 0;
+}
+
+.display-5 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.main {
+    margin-top: 30px;
+}
+
+.nav-link {
+    color:aliceblue
+}
+
+.nav-link:hover {
+    background-color: powderblue;
+    color: black;
+}
+
+.nav-link:focus {
+    color: skyblue
+}
+
+.jumbotron {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), 
+                    rgba(0, 0, 0, 0.5)), 
+                    url('assets/aldrich_park.jpg');
+    background-blend-mode: darken;
+    color:aliceblue;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', sans-serif;
+    min-height: 300px;
+}
+
+.jumbotron h1{
+    position:relative;
+    display: block;
+    padding-top: 10%;
+    padding-bottom: 15%;
+}
+
+.card {
+    margin:35px;
+    background-color: white;
+}
+
+.btn {
+    padding: 5px;
+}
+
+.product-title{
+    color:rgb(165, 3, 3)
+}
+
+.product-company{
+    color:rgb(182, 182, 182)
+}
+
+.product-price{
+    color:black;
+}
+
+.product-reviews{
+    color:darkslategray
+}
+
+.hovereffect img {
+    display:block;
+    position:relative;
+    -webkit-transition:all .2s linear;
+    transition:all .2s linear;
+}
+
+.hovereffect:hover img {
+    -ms-transform:scale(1.1);
+    -webkit-transform:scale(1.1);
+    transform:scale(1.1);
+}
+
+.form {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.sidenav {
+    padding-top: 20px;
+    background-color: #f1f1f1;
+    height: 100%;
+}
+
+.full-layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    /* left: 0;
+    bottom: 0; */
+    width: 100%;
+    background-color: darkslategray;
+    text-align: center;
+    color: black
+}
+
+.footer-info {
+    padding: 30px;
+}
+
+
+/*
+Credit for star rating implementation: https://codepen.io/stoumann/pen/yLbYOdz
+*/
+.rating {
+    --dir: right;
+    --fill: gold;
+    --fillbg: rgba(100, 100, 100, 0.15);
+    --star: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.25l-6.188 3.75 1.641-7.031-5.438-4.734 7.172-0.609 2.813-6.609 2.813 6.609 7.172 0.609-5.438 4.734 1.641 7.031z"/></svg>');
+    --stars: 5;
+    --starsize: 2rem;
+    --symbol: var(--star);
+    --value: 1;
+    --w: calc(var(--stars) * var(--starsize));
+    --x: calc(100% * (var(--value) / var(--stars)));
+    block-size: var(--starsize);
+    inline-size: var(--w);
+    position: relative;
+    touch-action: manipulation;
+    -webkit-appearance: none;
+  }
+  
+  .rating::-moz-range-track {
+    background: linear-gradient(to var(--dir), var(--fill) 0 var(--x), var(--fillbg) 0 var(--x));
+    block-size: 100%;
+    mask: repeat left center/var(--starsize) var(--symbol);
+  }
+  .rating::-webkit-slider-runnable-track {
+    background: linear-gradient(to var(--dir), var(--fill) 0 var(--x), var(--fillbg) 0 var(--x));
+    block-size: 100%;
+    mask: repeat left center/var(--starsize) var(--symbol);
+    -webkit-mask: repeat left center/var(--starsize) var(--symbol);
+  }
+  .rating::-moz-range-thumb {
+    height: var(--starsize);
+    opacity: 0;
+    width: var(--starsize);
+  }
+  .rating::-webkit-slider-thumb {
+    height: var(--starsize);
+    opacity: 0;
+    width: var(--starsize);
+    -webkit-appearance: none;
+  }
+  .rating, .rating-label {
+    display: block;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+  }
+  .rating-label {
+    margin-block-end: 1rem;
+  }
+  
+  /* NO JS */
+  .rating--nojs::-moz-range-track {
+    background: var(--fillbg);
+  }
+  .rating--nojs::-moz-range-progress {
+    background: var(--fill);
+    block-size: 100%;
+    mask: repeat left center/var(--starsize) var(--star);
+  }
+  .rating--nojs::-webkit-slider-runnable-track {
+    background: var(--fillbg);
+  }
+  .rating--nojs::-webkit-slider-thumb {
+    background-color: var(--fill);
+    box-shadow: calc(0rem - var(--w)) 0 0 var(--w) var(--fill);
+    opacity: 1;
+    width: 1px;
+  }
+  [dir="rtl"] .rating--nojs::-webkit-slider-thumb {
+    box-shadow: var(--w) 0 0 var(--w) var(--fill);
+  }

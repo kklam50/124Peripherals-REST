@@ -30,9 +30,6 @@ const db = require("./services/dbConfig");
 const app = express();
 const port = 3000;
 
-// Where we will keep products
-let products = [];
-
 app.use(cors());
 
 // Configuring body parser middleware
@@ -48,6 +45,13 @@ app.get('/products/:id', async function(req, res) {
     const productID = req.params.id;
     const results = await db.query("SELECT * FROM products WHERE productID = " + mysql.escape(productID));
     res.json(results);
+});
+
+app.post('/order', (req, res) => {
+    const orderContents = req.body;
+    console.log(orderContents);
+    // res.send("Order Submitted");
+    res.redirect("http://localhost:8080/orderDetails");
 });
 
 app.listen(port, () => console.log(`Hello world app listening on port http://localhost:3000/ !`));

@@ -26,9 +26,9 @@ app.get("/product", async function (req, res) {
 
     const productInfo = await fetch("http://localhost:3000/products/" + req.query)
     .then((response) => response.json())
-    .then((data => results = data));
+    .then((data => results = data[0]));
 
-    console.log(results[2]);
+    console.log(results[0]);
 
     res.render("product", { results });
 })

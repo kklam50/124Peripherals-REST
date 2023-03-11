@@ -21,8 +21,16 @@ app.get("/", async function(req, res) {
     res.render("index", { results, recentProducts })
  });
 
-app.get("/product", (req, res) => {
-    res.render("product");
+app.get("/product", async function (req, res) {
+    console.log(req.query);
+
+    const productInfo = await fetch("http://localhost:3000/products/" + req.query)
+    .then((response) => response.json())
+    .then((data => results = data));
+
+    console.log(results[2]);
+
+    res.render("product", { results });
 })
 
 app.get("/orderDetails", (req, res) => {

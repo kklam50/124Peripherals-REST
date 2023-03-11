@@ -20,6 +20,14 @@ app.get("/product", (req, res) => {
     res.render("product");
 })
 
+app.get("/orderDetails", (req, res) => {
+    res.render("orderDetails");
+})
+
+app.get("/cart", (req, res) => {
+    res.render("cart");
+})
+
 app.listen(8080, () => {
     console.log("Server started @ port 8080")
 });

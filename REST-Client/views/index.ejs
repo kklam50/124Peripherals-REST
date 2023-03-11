@@ -49,8 +49,47 @@
         </div>
     	
         <div class="row justify-content-center" id="product-grid">
-            PRODUCTS HERE
             <%= rows[0].productName %>
+            <% rows.forEach(function (element) {
+                %> 
+                <div title= <%= element.productName %> id=<%= element.productName %> class="card border-0 hovereffect" style="width: 20rem">
+                    <img src=<%= element.productImgSource %> class="card-img-top img-fluid" alt=<%= element.productName %> title=<%= element.productName %>>
+                    <div class="card-body">
+                        <p class="product-title fw-bold "><%= element.productName %></p>
+                        <p class="product-company fw-light"><%= element.productBrand %></p>
+                        <p class="product-price fw-bold">$<%= element.productPrice %> </p>
+                        <div class="d-flex align-items-start">
+                            <% 
+                                let starCounter = 0;
+                                for (let i = 0; i < 5; i++) {
+                                    if (starCounter < element.productRating) {
+                                        starCounter += 1;
+                                        %> 
+                                        <div class="p-0">
+                                            <i class="bi bi-star-fill"></i>
+                                        </div> 
+                                        <%
+                                    }
+                                    else {
+                                        %> 
+                                        <div class="p-0">
+                                            <i class="bi bi-star"></i>
+                                        </div> 
+                                        <%
+                                    }
+                                }
+                            %>
+                            <div class="p-0">
+                                <span class="product-reviews align-right">&nbsp&nbsp</span>
+                            </div>
+                            <div class="p-0">
+                                <span class="product-reviews align-right"> <%= element.productReviewNum %> reviews</span>
+                            </div>
+                        </div>
+                    </div> 
+                    <a href="product.jsp?productID=<%= element.productID %>"  class="stretched-link"></a>
+                </div> <%
+            }) %>
         </div>
     </div>
     

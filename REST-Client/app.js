@@ -11,7 +11,6 @@ app.set("view engine", "ejs");
 
 app.get("/", async function(req, res) {
     const rows = await db.query("SELECT * FROM products");
-    console.log(typeof(rows));
     res.render("index", { rows })
  });
 

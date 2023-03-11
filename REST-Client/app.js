@@ -22,13 +22,13 @@ app.get("/", async function(req, res) {
  });
 
 app.get("/product", async function (req, res) {
-    console.log(req.query);
+    console.log("req.query: " + req.query.productID);
 
-    const productInfo = await fetch("http://localhost:3000/products/" + req.query)
+    const productInfo = await fetch("http://localhost:3000/products/" + req.query.productID)
     .then((response) => response.json())
     .then((data => results = data[0]));
 
-    console.log(results[0]);
+    console.log(results);
 
     res.render("product", { results });
 })

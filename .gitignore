@@ -1,11 +1,1 @@
-target/
-*.class
-.vscode/settings.json
-*.class
-*.war
-*.war
-*.class
-*.lst
-*.war
-*.class
-*.lst
+node_modules/

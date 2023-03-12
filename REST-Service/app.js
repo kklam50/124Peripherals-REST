@@ -117,4 +117,15 @@ app.get('/zip', async function(req, res) {
     res.json(results);
 });
 
+app.get('/mostRecentOrder', async function(req, res) {
+    var query = `
+        SELECT orderNumber FROM orders
+        ORDER BY orderNumber DESC
+        LIMIT 1
+    `;
+
+    const results = await db.query(query);
+    res.json(results);
+});
+
 app.listen(port, () => console.log(`Hello world app listening on port http://localhost:3000/ !`));

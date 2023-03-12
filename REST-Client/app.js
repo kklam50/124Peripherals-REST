@@ -51,6 +51,7 @@ app.get("/cart", async function (req, res) {
         names.push(productQuery.productName);
         images.push(productQuery.productImgName);
         prices.push(productQuery.productPrice);
+        console.log(cart[product]);
         qty.push(cart[product]);
         qtyPrices.push(parseFloat(cart[product]) * parseFloat(productQuery.productPrice));
         totalPrice += parseFloat(productQuery.productPrice);

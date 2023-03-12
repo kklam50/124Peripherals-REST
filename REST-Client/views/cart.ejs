@@ -86,6 +86,7 @@
                             <div class="col-md-4" style="padding-bottom: 20px;">
                                 <!-- <label for="City">City</label> -->
                                 <input name="customerCity" id="City" class="form-control text-align:left" placeholder="City" required>
+                                <span id="city_results"></span>
                             </div>
                             <div class="col-md-4" style="padding-bottom: 20px;">
                                 <!-- <label for="State">State</label> -->
@@ -94,6 +95,7 @@
                             <div class="col-md-4" style="padding-bottom: 20px;">
                                 <!-- <label for="ZipCode">Zip Code</label> -->
                                 <input name="customerZipCode" type="tel" id="ZipCode" class="form-control text-align:left" placeholder="Zip Code (XXXXX)" pattern="{5}" required>
+                                <span id="zip_results"></span>
                             </div>
                             <div class="col-md-6" style="padding-bottom: 20px;">
                                 <!-- <label for="PhoneNumber">Phone Number</label> -->
@@ -143,3 +145,126 @@
         
 </body>
 </html>
+
+<script>
+
+    function load_city(query = '')
+    {
+        fetch('http://localhost:3000/city?search_query='+query+'').then(function(response){
+
+            return response.json();
+
+        }).then(function(responseData){
+
+            var html = '<ul class="list-group">';
+
+            if(responseData.length > 0)
+            {
+                for(var count = 0; count < responseData.length; count++)
+                {
+                    var regular_expression = new RegExp("(" + query+')', 'gi');
+
+                    html += '<a href="#" class="list-group-item list-group-item-action" onclick="get_cities(this)">'+responseData[count].city.replace(regular_expression, '<span class="text-success fw-bold">$1</span>')+'</a>';
+                }
+            }
+            else
+            {
+                html += '<a href="#" class="list-group-item list-group-item-action disabled">No Data Found</a>';
+            }
+
+            html += '</ul>';
+
+            document.getElementById('city_results').innerHTML = html;
+
+        });
+    }
+
+    var city_input = document.getElementById("City");
+
+    city_input.onkeyup = function(){
+
+        var query = city_input.value;
+
+        load_city(query);
+
+    };
+
+    city_input.onfocus = function(){
+
+        var query = city_input.value;
+
+        load_city(query);
+
+    };
+
+    function get_cities(event)
+    {
+        var city = event.textContent;
+
+        document.getElementById('City').value = city;
+
+        document.getElementById('city_results').innerHTML = '';
+    }
+
+
+    function load_zip(query = '')
+    {
+        fetch('http://localhost:3000/zip?search_query='+query+'').then(function(response){
+
+            return response.json();
+
+        }).then(function(responseData){
+
+            var html = '<ul class="list-group">';
+
+            if(responseData.length > 0)
+            {
+                for(var count = 0; count < responseData.length; count++)
+                {
+                    var regular_expression = new RegExp("(" + query +')', 'gi');
+
+                    html += '<a href="#" class="list-group-item list-group-item-action" onclick="get_zip(this)">'+responseData[count].zip.toString().replace(regular_expression, '<span class="text-success fw-bold">$1</span>')+'</a>';
+                }
+            }
+            else
+            {
+                html += '<a href="#" class="list-group-item list-group-item-action disabled">No Data Found</a>';
+            }
+
+            html += '</ul>';
+
+            document.getElementById('zip_results').innerHTML = html;
+
+        });
+    }
+
+    var zip_input = document.getElementById("ZipCode");
+
+    zip_input.onkeyup = function(){
+
+        var query = zip_input.value;
+
+        load_zip(query);
+
+    };
+
+    zip_input.onfocus = function(){
+
+        var query = zip_input.value;
+
+        load_zip(query);
+
+    };
+
+    function get_zip(event)
+    {
+        var zip = event.textContent;
+
+        document.getElementById('ZipCode').value = zip;
+
+        document.getElementById('zip_results').innerHTML = '';
+    }
+
+
+
+</script>

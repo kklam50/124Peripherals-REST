@@ -65,4 +65,30 @@ app.get('/recents', async function(req, res) {
     res.json(Array.from(recentProducts));
 });
 
+app.get('/city', async function(req, res) {
+    var search_query = req.query.search_query;
+    var query = `
+        SELECT DISTINCT city FROM zipcodes 
+        WHERE city REGEXP '^${search_query}[A-Za-z]+' 
+        LIMIT 10
+    `;
+
+    const results = await db.query(query);
+    // console.log(results);
+    res.json(results);
+});
+
+app.get('/zip', async function(req, res) {
+    var search_query = req.query.search_query.toString();
+    var query = `
+        SELECT DISTINCT zip FROM zipcodes 
+        WHERE zip REGEXP '^${search_query}[0-9]+'
+        LIMIT 10
+    `;
+
+    const results = await db.query(query);
+    // console.log(results);
+    res.json(results);
+});
+
 app.listen(port, () => console.log(`Hello world app listening on port http://localhost:3000/ !`));

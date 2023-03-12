@@ -34,11 +34,31 @@ app.get("/orderDetails", (req, res) => {
     res.render("orderDetails");
 })
 
-app.get("/cart", (req, res) => {
-    // console.log("client-app-js line 38");
-    console.log(req.cookies);
+app.get("/cart", async function (req, res) {
     var cart = req.cookies;
-    res.render("cart", { cart });
+    var totalPrice = 0.00;
+    var images = [];
+    var names = [];
+    var prices = [];
+    var qtyPrices = [];
+    var qty = [];
+    console.log(cart);
+    for (var product in cart) {
+        const productQuery = await fetch("http://localhost:3000/products/" + product)
+        .then((response) => response.json())
+        .then((data => results = data[0]));
+
+        names.push(productQuery.productName);
+        images.push(productQuery.productImgName);
+        prices.push(productQuery.productPrice);
+        console.log(cart[product]);
+        qty.push(cart[product]);
+        qtyPrices.push(parseFloat(cart[product]) * parseFloat(productQuery.productPrice));
+        totalPrice += parseFloat(productQuery.productPrice);
+    }
+    console.log(names[0]);
+    totalPrice = totalPrice.toFixed(2);
+    res.render("cart", { cart, images, qty, qtyPrices, totalPrice, names, prices });
 })
 
 app.get("/add", (req, res) => {
@@ -46,7 +66,8 @@ app.get("/add", (req, res) => {
 })
 
 app.post("/order", async function (req, res) {
-
+    console.log("Test");
+    res.render("orderDetails");
 });
 
 

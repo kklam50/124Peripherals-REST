@@ -30,7 +30,7 @@ app.get('/products/:id', async function(req, res) {
 
 app.get('/order', (req, res) => {
     const customerInfo = req.body;
-    console.log(customerInfo);
+    // console.log(customerInfo);
     const orderContents = req.cookies;
     console.log("Order Contents: " + orderContents);
 });

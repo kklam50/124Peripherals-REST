@@ -63,9 +63,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% for (var i = 0; i < Object.values(cart).length; i++) { 
-                                        console.log(names[i]);
-                                        %>
+                                    <% for (var i = 0; i < Object.values(cart).length; i++) {  %>
                                     <tr>
                                         <th scope="row"><%= names[i] %></th>
                                         <td> <img src="assets/<%= images[i] %>" class="card-img-top img-fluid" alt="" title="" style="width:100px;height:100px;" ></td>
@@ -76,9 +74,7 @@
                                     <% } %>
                                 </tbody>
                             </table>
-
                             <h1>Total Price: $<%= totalPrice %></h1>
-
                             <%
                         }
                         
@@ -86,8 +82,6 @@
                         for (var key in cart) {
                             cartString +=`${key}:${cart[key]} `
                         }
-
-                        var totalPrice = 100;
                         
                         %>
                     </div>

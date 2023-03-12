@@ -66,7 +66,8 @@ app.get("/add", (req, res) => {
 })
 
 app.post("/order", async function (req, res) {
-
+    console.log("Test");
+    res.render("orderDetails");
 });
 
 

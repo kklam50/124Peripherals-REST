@@ -65,12 +65,6 @@ app.get("/add", (req, res) => {
     res.render("cart");
 })
 
-app.post("/order", async function (req, res) {
-    console.log("Test");
-    res.render("orderDetails");
-});
-
-
 app.listen(8080, () => {
     console.log("Server started @ port 8080")
 });

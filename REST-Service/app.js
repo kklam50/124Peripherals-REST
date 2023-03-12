@@ -117,4 +117,25 @@ app.get('/zip', async function(req, res) {
     res.json(results);
 });
 
+// app.get('/review', function(req, res) {
+//     console.log("wat");
+//     res.redirect("http://localhost:8080/");
+// })
+
+app.post('/review', async function(req, res) {
+    console.log(req.body);
+    const reviewInfo = req.body;
+    // console.log(`Rated product ${req.productID} with rating ${req.productRating}`);
+    const productToUpdate = await db.query("SELECT * FROM products WHERE productID =" + reviewInfo.productID);
+
+    var reviews = parseInt(productToUpdate[0].productReviewNum);
+    var oldRating = parseInt(productToUpdate[0].productRating);
+    var newRating = (oldRating * reviews + parseInt(reviewInfo.ratingAmount))/ (reviews + 1);
+
+    db.query("UPDATE products SET productRating = " + newRating + " WHERE productID = " + reviewInfo.productID);
+    db.query("UPDATE products SET productReviewNum = " + (reviews + 1) + " WHERE productID = " + reviewInfo.productID)
+
+    res.redirect(303, "http://localhost:8080/");
+})
+
 app.listen(port, () => console.log(`Hello world app listening on port http://localhost:3000/ !`));

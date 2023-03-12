@@ -7,17 +7,17 @@ function httpGet(theUrl)
     return xmlHttp.responseText;
 }
 
-function sendRating(productID, buttonNumber)
-{
-    var xmlHttp = new XMLHttpRequest();
-    var theUrl = "ratings";
-    xmlHttp.open( "POST", theUrl, false ); // false for synchronous request
-    var productRating = document.getElementById("rating" + buttonNumber).value;
-    console.log(productID);
-    console.log(productRating);
+// function sendRating(productID, buttonNumber)
+// {
+//     var xmlHttp = new XMLHttpRequest();
+//     var theUrl = "http://localhost:3000/review";
+//     xmlHttp.open( "POST", theUrl, false ); // false for synchronous request
+//     var productRating = document.getElementById("rating" + buttonNumber).value;
+//     console.log(`Product ID: ${productID}, Product Rating: ${productRating}`);
+//     alert("Review submitted!");
 
-    var str = productID + "\n" + productRating;
+//     var str = productID + "\n" + productRating;
     
-    xmlHttp.send(str);
+//     xmlHttp.send(str);
     
-}
+// }

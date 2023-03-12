@@ -48,6 +48,7 @@
             <div class="container-fluid">
                 <div id="page-content">
                     <div id="product-content" class="wrapper row content">
+                        <h1>Your Cart</h1>
                         <%
                         if (Object.values(cart).length == 0) { %>
                             <h2>Your cart is empty!</h2> <%
@@ -87,7 +88,7 @@
                     </div>
                     
                     <div class="wrapper row content">
-                        <form class="row g-3" action="http://localhost:3000/order" +  method="POST">
+                        <form class="row g-3" action="http://localhost:3000/order"  method="POST">
                             <h1 id="OrderForm" style="text-align:left">Order Form</h1>
                             <input name="orderItems" type="hidden" value="<%= cartString %>">
                             <input name="orderTotal" type="hidden" value="<%= totalPrice %>">

@@ -53,13 +53,13 @@ app.get("/orderDetails", async function (req, res) {
         qty.push(cart[product]);
         qtyPrices.push(parseFloat(cart[product]) * parseFloat(productQuery.productPrice));
         totalPrice += parseFloat(parseFloat(cart[product]) * parseFloat(productQuery.productPrice));
+        res.clearCookie(product);
     }
     totalPrice = totalPrice.toFixed(2);
     res.render("orderDetails", { orderNumber, cart, images, qty, qtyPrices, totalPrice, names, prices });
 })
 
 app.get("/cart", async function (req, res) {
-    // console.log("client-app-js line 38");
     var cart = req.cookies;
     var totalPrice = 0.00;
     var images = [];
@@ -67,7 +67,6 @@ app.get("/cart", async function (req, res) {
     var prices = [];
     var qtyPrices = [];
     var qty = [];
-    console.log(cart);
     for (var product in cart) {
         const productQuery = await fetch("http://localhost:3000/products/" + product)
         .then((response) => response.json())
@@ -80,7 +79,6 @@ app.get("/cart", async function (req, res) {
         qtyPrices.push(parseFloat(cart[product]) * parseFloat(productQuery.productPrice));
         totalPrice += parseFloat(parseFloat(cart[product]) * parseFloat(productQuery.productPrice));
     }
-    console.log(names[0]);
     totalPrice = totalPrice.toFixed(2);
     res.render("cart", { cart, images, qty, qtyPrices, totalPrice, names, prices });
 })

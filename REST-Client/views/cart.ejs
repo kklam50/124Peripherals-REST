@@ -62,6 +62,19 @@
                                         <th scope="col">Total</th>
                                     </tr>
                                 </thead>
+                                <tbody>
+                                    <% for (var i = 0; i < Object.values(cart).length; i++) { 
+                                        console.log(names[i]);
+                                        %>
+                                    <tr>
+                                        <th scope="row"><%= names[i] %></th>
+                                        <td> <img src="" class="card-img-top img-fluid" alt="" title="" style="width:100px;height:100px;" ></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <% } %>
+                                </tbody>
                             </table>
 
                             <%

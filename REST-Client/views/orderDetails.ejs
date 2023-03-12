@@ -48,10 +48,46 @@
             <div class="container-fluid">
                 <div id="page-content">
                 	<h1>Thank you for your order!</h1>
-                    <h2>Order Summary:</h2>
-                    ORDER NUM HERE
+                    <h3>Order Number : <%= orderNumber %></h3>
 			        <div class="row justify-content-center" id="product-grid">
-			            ORDER INFO HERE
+			            <div id="product-content" class="wrapper row content">
+                            <%
+                            if (Object.values(cart).length == 0) { %>
+                                <h2>Your cart is empty!</h2> <%
+                            } else { %>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Item</th>
+                                            <th scope="col"></th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for (var i = 0; i < Object.values(cart).length; i++) {  %>
+                                        <tr>
+                                            <th scope="row"><%= names[i] %></th>
+                                            <td> <img src="assets/<%= images[i] %>" class="card-img-top img-fluid" alt="" title="" style="width:100px;height:100px;" ></td>
+                                            <td>$<%= prices[i] %></td>
+                                            <td><%= qty[i] %></td>
+                                            <td>$<%= Math.round(prices[i] * qty[i] * 100)/100 %></td>
+                                        </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                                <h1>Total Price: $<%= totalPrice %></h1>
+                                <%
+                            }
+                            
+                            var cartString = "";
+                            for (var key in cart) {
+                                cartString +=`${key}:${cart[key]} `
+                            }
+                            
+                            %>
+                        </div>
 			        </div>
 			        
                 </div>

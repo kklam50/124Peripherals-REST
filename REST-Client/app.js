@@ -43,7 +43,7 @@ app.get("/cart", async function (req, res) {
     var qtyPrices = [];
     var qty = [];
     console.log(cart);
-    for (product in Object.keys(cart)) {
+    for (var product in cart) {
         const productQuery = await fetch("http://localhost:3000/products/" + product)
         .then((response) => response.json())
         .then((data => results = data[0]));

@@ -1,10 +1,12 @@
 const express = require("express");
 const path = require("path");
 const app = express();
+var cookieParser = require('cookie-parser');
 
 // app.use(express.static(path.join(__dirname, "services")));
 
 app.use(express.static('public'));
+app.use(cookieParser());
 
 app.set("view engine", "ejs");
 
@@ -33,7 +35,10 @@ app.get("/orderDetails", (req, res) => {
 })
 
 app.get("/cart", (req, res) => {
-    res.render("cart");
+    console.log("client-app-js line 38");
+    console.log(req.cookies);
+    var cart = req.cookies;
+    res.render("cart", { cart });
 })
 
 app.get("/add", (req, res) => {

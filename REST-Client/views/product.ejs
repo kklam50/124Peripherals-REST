@@ -85,6 +85,9 @@
                                 <div class="p-0">
                                     <span class="product-reviews align-right">&nbsp&nbsp</span>
                                 </div>
+                                <div class="p-0">
+                                    <span class="product-reviews align-right"> <%= results.productReviewNum %> reviews</span>
+                                </div>
                             </div>
                             <h4 class="d-inline product-price fw-bold">Price: </h4>
                             <h5 class="d-inline product-price fw-bold">$<%= results.productPrice %></h5>
@@ -99,6 +102,9 @@
                                 <li class="product-description">Color:<%= results.productColor %></li>
                                 <li class="product-description">Shell Material:<%= results.productMaterial %></li>
                             </ul>
+                            <p class="d-inline product-company fw-light">Product ID: </p>
+                            <p id="productID" class="d-inline product-company fw-light"><%= results.productID %></p>
+                            <br><br>
                             <label for="Quantity">Quantity: </label>
                             <input type="number" id="Quantity" class="col-md-1 text-align:left" min="1" max="10" value=1 required>
                             <button onclick="sendProduct()" id="addToCartButton" class="col-md-3">Add To Cart</button>

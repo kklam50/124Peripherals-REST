@@ -67,13 +67,21 @@
                             <%
                         }
                         
+                        var cartString = "";
+                        for (var key in cart) {
+                            cartString +=`${key}:${cart[key]} `
+                        }
+
+                        var totalPrice = 100;
                         
                         %>
                     </div>
                     
                     <div class="wrapper row content">
-                        <form class="row g-3" action="http://localhost:3000/order" method="POST">
+                        <form class="row g-3" action="http://localhost:3000/order" +  method="POST">
                             <h1 id="OrderForm" style="text-align:left">Order Form</h1>
+                            <input name="orderItems" type="hidden" value="<%= cartString %>">
+                            <input name="orderTotal" type="hidden" value="<%= totalPrice %>">
                             <div class="">
                                 <h2>Contact Information</h2>
                             </div>

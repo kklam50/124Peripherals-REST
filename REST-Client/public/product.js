@@ -1,19 +1,20 @@
 function sendProduct()
 {
     var product = document.getElementById("product-name").innerHTML;
+    var productID = document.getElementById("productID").innerHTML;
     var qty = document.getElementById("Quantity").value;
 
     let cookie = document.cookie;
     if (cookie.length == 0) {
-        document.cookie = product + "=" + qty;
+        document.cookie = productID + "=" + qty;
     } else {
         cookieObj = getObject(document.cookie);
-        addProduct(cookieObj, product, qty);
+        addProduct(cookieObj, productID, qty);
         clearCookies();
         formatCookie(cookieObj);
     }
 
-    console.log(document.cookie);
+    // console.log(document.cookie);
 }
 
 function getObject(cookie) {

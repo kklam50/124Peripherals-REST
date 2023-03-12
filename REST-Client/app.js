@@ -35,7 +35,7 @@ app.get("/orderDetails", (req, res) => {
 })
 
 app.get("/cart", (req, res) => {
-    console.log("client-app-js line 38");
+    // console.log("client-app-js line 38");
     console.log(req.cookies);
     var cart = req.cookies;
     res.render("cart", { cart });
@@ -44,6 +44,10 @@ app.get("/cart", (req, res) => {
 app.get("/add", (req, res) => {
     res.render("cart");
 })
+
+app.post("/order", async function (req, res) {
+
+});
 
 
 app.listen(8080, () => {

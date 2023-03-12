@@ -29,7 +29,9 @@ app.get('/products/:id', async function(req, res) {
 });
 
 app.get('/order', (req, res) => {
-    const orderContents = req.cookies.products;
+    const customerInfo = req.body;
+    console.log(customerInfo);
+    const orderContents = req.cookies;
     console.log("Order Contents: " + orderContents);
 });
 
@@ -37,9 +39,36 @@ app.get('/order', (req, res) => {
 app.post('/order', (req, res) => {
     const customerInfo = req.body;
     console.log(customerInfo);
-    const orderContents = req.cookies.products;
-    console.log("Order Contents: " + orderContents);
-    // res.send("Order Submitted");
+    console.log(typeof(customerInfo));
+
+    const query = "INSERT INTO orders (orderItems, "
+        + "orderTotal, "
+        + "orderShippingMethod, "
+        + "customerName, "
+        + "customerAddress, "
+        + "customerEmail, "
+        + "customerPhoneNumber, "
+        + "customerCardholderName, "
+        + "customerCardNumber, "
+        + "customerCardExpDate, "
+        + "customerCardCVC, "
+        + "orderMessage) VALUES "
+        + "("
+        + "\"" + customerInfo.orderItems + "\", "
+        +        customerInfo.orderTotal + ", "
+        + "\"" + customerInfo.orderShippingMethod + "\", "
+        + "\"" + customerInfo.customerFirstName + " " + customerInfo.customerLastName + "\", "
+        + "\"" + customerInfo.customerAddress + " " + customerInfo.customerCity + " " + customerInfo.customerState + " " + customerInfo.customerZipCode + " " + customerInfo.customerCountry + "\", "
+        + "\"" + customerInfo.customerEmail + "\", "
+        + "\"" + customerInfo.customerPhoneNumber + "\", "
+        + "\"" + customerInfo.customerCardholderName + "\", "
+        + "\"" + customerInfo.customerCardNumber + "\", "
+        + "\"" + customerInfo.customerCardExpDate + "\", "
+        + "\"" + customerInfo.customerCardCVC + "\", "
+        + "\"" + customerInfo.orderMessage + "\""
+        + ")";
+    
+    db.query(query);
     res.redirect("http://localhost:8080/orderDetails");
 });
 

@@ -37,8 +37,11 @@ app.get("/orderDetails", (req, res) => {
 app.get("/cart", async function (req, res) {
     var cart = req.cookies;
     var totalPrice = 0.00;
-    var images = []
-    var names = []
+    var images = [];
+    var names = [];
+    var prices = [];
+    var qtyPrices = [];
+    var qty = [];
     console.log(cart);
     for (product in Object.keys(cart)) {
         const productQuery = await fetch("http://localhost:3000/products/" + product)
@@ -47,11 +50,14 @@ app.get("/cart", async function (req, res) {
 
         names.push(productQuery.productName);
         images.push(productQuery.productImgName);
+        prices.push(productQuery.productPrice);
+        qty.push(cart[product]);
+        qtyPrices.push(parseFloat(cart[product]) * parseFloat(productQuery.productPrice));
         totalPrice += parseFloat(productQuery.productPrice);
     }
     console.log(names[0]);
     totalPrice = totalPrice.toFixed(2);
-    res.render("cart", { cart, totalPrice, names });
+    res.render("cart", { cart, images, qty, qtyPrices, totalPrice, names, prices });
 })
 
 app.get("/add", (req, res) => {

@@ -51,64 +51,70 @@
                 <div id="page-content">
                     
                     <div id="product-content" class="wrapper row content">
-                        <div id="product-images" class="col-md-6">
-                            <div class="preview">
-                                <div class="tab-pane active" id="product-pic">
-                                    <img class="img-fluid" src="assets/<%= results.productImgName %>" >
+                        <% if (results == "Not Found") { %>
+                            <h1>Product Not Found</h1>
+                        <%
+                        } else { %>
+                            <div id="product-images" class="col-md-6">
+                                <div class="preview">
+                                    <div class="tab-pane active" id="product-pic">
+                                        <img class="img-fluid" src="assets/<%= results.productImgName %>" >
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="product-info" class="col-md-6">
-                            <h3 id="product-name" class="product-title fw-bold"><%= results.productName %></h3>
-                            <p class="product-company fw-light"> <%= results.productBrand %> </p>
-                            <div id="product-rating" class="d-flex align-items-start">
-                                <% 
-                                let starCounter = 0;
-                                for (let i = 0; i < 5; i++) {
-                                    if (starCounter < results.productRating) {
-                                        starCounter += 1;
-                                        %> 
-                                        <div class="p-0">
-                                            <i class="bi bi-star-fill"></i>
-                                        </div> 
-                                        <%
+                            <div id="product-info" class="col-md-6">
+                                <h3 id="product-name" class="product-title fw-bold"><%= results.productName %></h3>
+                                <p class="product-company fw-light"> <%= results.productBrand %> </p>
+                                <div id="product-rating" class="d-flex align-items-start">
+                                    <% 
+                                    let starCounter = 0;
+                                    for (let i = 0; i < 5; i++) {
+                                        if (starCounter < results.productRating) {
+                                            starCounter += 1;
+                                            %> 
+                                            <div class="p-0">
+                                                <i class="bi bi-star-fill"></i>
+                                            </div> 
+                                            <%
+                                        }
+                                        else {
+                                            %> 
+                                            <div class="p-0">
+                                                <i class="bi bi-star"></i>
+                                            </div> 
+                                            <%
+                                        }
                                     }
-                                    else {
-                                        %> 
-                                        <div class="p-0">
-                                            <i class="bi bi-star"></i>
-                                        </div> 
-                                        <%
-                                    }
-                                }
-                                %>
-                                <div class="p-0">
-                                    <span class="product-reviews align-right">&nbsp&nbsp</span>
+                                    %>
+                                    <div class="p-0">
+                                        <span class="product-reviews align-right">&nbsp&nbsp</span>
+                                    </div>
+                                    <div class="p-0">
+                                        <span class="product-reviews align-right"> <%= results.productReviewNum %> reviews</span>
+                                    </div>
                                 </div>
-                                <div class="p-0">
-                                    <span class="product-reviews align-right"> <%= results.productReviewNum %> reviews</span>
-                                </div>
+                                <h4 class="d-inline product-price fw-bold">Price: </h4>
+                                <h5 class="d-inline product-price fw-bold">$<%= results.productPrice %></h5>
+                                <h4 class="product-description">Product Description</h4>
+                                <p class="product-description">
+                                    <%= results.productDescription %>
+                                </p>
+                                <h4 class="product-description">Specs</h4>
+                                <ul class="product-description">
+                                    <li class="product-description">Sensor:<%= results.productSensor %></li>
+                                    <li class="product-description">Weight:<%= results.productWeight %></li>
+                                    <li class="product-description">Color:<%= results.productColor %></li>
+                                    <li class="product-description">Shell Material:<%= results.productMaterial %></li>
+                                </ul>
+                                <p class="d-inline product-company fw-light">Product ID: </p>
+                                <p id="productID" class="d-inline product-company fw-light"><%= results.productID %></p>
+                                <br><br>
+                                <label for="Quantity">Quantity: </label>
+                                <input type="number" id="Quantity" class="col-md-1 text-align:left" min="1" max="10" value=1 required>
+                                <button onclick="sendProduct()" id="addToCartButton" class="col-md-3">Add To Cart</button>
                             </div>
-                            <h4 class="d-inline product-price fw-bold">Price: </h4>
-                            <h5 class="d-inline product-price fw-bold">$<%= results.productPrice %></h5>
-                            <h4 class="product-description">Product Description</h4>
-                            <p class="product-description">
-                                <%= results.productDescription %>
-                            </p>
-                            <h4 class="product-description">Specs</h4>
-                            <ul class="product-description">
-                                <li class="product-description">Sensor:<%= results.productSensor %></li>
-                                <li class="product-description">Weight:<%= results.productWeight %></li>
-                                <li class="product-description">Color:<%= results.productColor %></li>
-                                <li class="product-description">Shell Material:<%= results.productMaterial %></li>
-                            </ul>
-                            <p class="d-inline product-company fw-light">Product ID: </p>
-                            <p id="productID" class="d-inline product-company fw-light"><%= results.productID %></p>
-                            <br><br>
-                            <label for="Quantity">Quantity: </label>
-                            <input type="number" id="Quantity" class="col-md-1 text-align:left" min="1" max="10" value=1 required>
-                            <button onclick="sendProduct()" id="addToCartButton" class="col-md-3">Add To Cart</button>
-                        </div>
+                        <%
+                        } %>
                     </div>
                 </div>
             </div>

@@ -19,22 +19,29 @@ app.use(bodyParser.json());
 
 app.get('/products', async function(req, res) {
     const results = await db.query("SELECT * FROM products");
-    res.json(results);
+    if (results && results.length > 0) {
+        res.json(results);
+    }
+    else {
+        res.status(404).send('404 Error: Product Not Found');
+    }
+    // res.json(results);
 });
 
 app.get('/products/:id', async function(req, res) {
     const productID = req.params.id;
     const results = await db.query("SELECT * FROM products WHERE productID = " + mysql.escape(productID));
-    res.json(results);
+    if (results && results.length > 0) {
+        res.json(results);
+    }
+    else {
+        console.log("AAAAAAAAAA")
+        // res.status(404).send('404 Error: Product Not Found');
+        // res.redirect("http://localhost:8080/error");
+        res.sendStatus(404);
+    }
+    // res.json(results);
 });
-
-app.get('/order', (req, res) => {
-    const customerInfo = req.body;
-    // console.log(customerInfo);
-    const orderContents = req.cookies;
-    console.log("Order Contents: " + orderContents);
-});
-
 
 app.post('/order', (req, res) => {
     const customerInfo = req.body;
@@ -74,21 +81,26 @@ app.post('/order', (req, res) => {
 
 app.get('/recents', async function(req, res) {
     const recentOrders = await db.query("SELECT * FROM orders ORDER BY orderNumber DESC");
-    let recentProducts = new Set();
+    if (recentOrders && recentOrders.length > 0) {
+        let recentProducts = new Set();
 
-    for (var i = 0; (i < recentOrders.length && recentProducts.size < 5) ; i++) {
-        const regex = /(.)(?=:)/g;
-        var orderContents = recentOrders[i].orderItems;
-        var items = orderContents.match(regex);
+        for (var i = 0; (i < recentOrders.length && recentProducts.size < 5) ; i++) {
+            const regex = /(.)(?=:)/g;
+            var orderContents = recentOrders[i].orderItems;
+            var items = orderContents.match(regex);
 
-        for (item of items) {
-            if (recentProducts.size < 5) {
-                recentProducts.add(item);
+            for (item of items) {
+                if (recentProducts.size < 5) {
+                    recentProducts.add(item);
+                }
             }
         }
-    }
 
-    res.json(Array.from(recentProducts));
+        res.json(Array.from(recentProducts));
+    }
+    else {
+        res.sendStatus(404);
+    }
 });
 
 app.get('/city', async function(req, res) {
@@ -100,8 +112,12 @@ app.get('/city', async function(req, res) {
     `;
 
     const results = await db.query(query);
-    // console.log(results);
-    res.json(results);
+    if (results && results.length > 0) {
+        res.json(results);
+    }
+    else {
+        res.sendStatus(404);
+    }
 });
 
 app.get('/zip', async function(req, res) {
@@ -113,8 +129,12 @@ app.get('/zip', async function(req, res) {
     `;
 
     const results = await db.query(query);
-    // console.log(results);
-    res.json(results);
+    if (results && results.length > 0) {
+        res.json(results);
+    }
+    else {
+        res.sendStatus(404);
+    }
 });
 
 app.get('/mostRecentOrder', async function(req, res) {
@@ -125,13 +145,13 @@ app.get('/mostRecentOrder', async function(req, res) {
     `;
 
     const results = await db.query(query);
-    res.json(results);
+    if (results && results.length > 0) {
+        res.json(results);
+    }
+    else {
+        res.sendStatus(404);
+    }
 });
-
-// app.get('/review', function(req, res) {
-//     console.log("wat");
-//     res.redirect("http://localhost:8080/");
-// })
 
 app.post('/review', async function(req, res) {
     console.log(req.body);
@@ -148,5 +168,9 @@ app.post('/review', async function(req, res) {
 
     res.redirect(303, "http://localhost:8080/");
 })
+
+app.get('*', function(req, res){
+    res.send(404);
+});
 
 app.listen(port, () => console.log(`Hello world app listening on port http://localhost:3000/ !`));

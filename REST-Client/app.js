@@ -25,7 +25,12 @@ app.get("/", async function(req, res) {
 app.get("/product", async function (req, res) {
     const productInfo = await fetch("http://localhost:3000/products/" + req.query.productID)
     .then((response) => response.json())
-    .then((data => results = data[0]));
+    .then((data => results = data[0]))
+    .catch(function() {
+        console.log("AAA");
+        res.redirect(404, "http://localhost:8080/");
+        return;
+    });
 
     res.render("product", { results });
 })
@@ -85,6 +90,11 @@ app.get("/cart", async function (req, res) {
 
 app.get("/add", (req, res) => {
     res.render("cart");
+})
+
+
+app.get("/error", (req, res) => {
+    res.render("error");
 })
 
 app.listen(8080, () => {

@@ -17,9 +17,17 @@ From here, a user may go back to the index using the top left "124 PC Peripheral
 Requirements:
 
 Requirement 1:
-As per Bhavaya, Express and ndoejs was allowed for this assignment. Our website instead uses Express and EJS in place of Servlets and JSP. We attempted to emulate JSP's feature of allowing Java code in the JSP file by doing the same for EJS files. 
+As per Bhavaya, Express and nodejs was allowed for this assignment. Our website instead uses Express and EJS in place of Servlets and JSP. We attempted to emulate JSP's feature of allowing Java code in the JSP file by doing the same for EJS files. 
 
 Requirement 2:
 Fetch is called instead of AJAX when the user begins filling in the form on the cart page. Specifically, when the user begins entering in either their city or zip code, fetch calls are made to assist the user by providing possible terms that change as the user enters in more characters.
 
-
+Requirement 3:
+A REST service application was created to fulfill this requirement. All interactions with the database were reworked to incorporate API calls. The new REST service application contains the following operations:
+- Getting all products through a GET request
+- Getting specific products through a GET request
+- Submitting an order through a POST request
+- Getting recent orders for rating through a GET request
+- Getting city/zip information for autofilling in requirement 2 through a GET request
+- Getting the most recent order for the order confirmation page through a GET request
+- Submitting a review through a POST request

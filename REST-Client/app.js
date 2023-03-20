@@ -11,9 +11,18 @@ app.use(cookieParser());
 app.set("view engine", "ejs");
 
 app.get("/", async function(req, res) {
+    var statusCode = 200
     const fetchProducts = await fetch("http://localhost:3000/products")
-    .then((response) => response.json())
+    .then((response) => {
+        statusCode = response.status
+        return response.json()
+    })
     .then((data => results = data));
+
+    if (statusCode != 200) {
+        res.render("error", {statusCode});
+        return;
+    }
 
     const recentlyOrdered = await fetch("http://localhost:3000/recents")
     .then((response) => response.json())
@@ -23,15 +32,19 @@ app.get("/", async function(req, res) {
  });
 
 app.get("/product", async function (req, res) {
+    var statusCode = 200
     const productInfo = await fetch("http://localhost:3000/products/" + req.query.productID)
-    .then((response) => response.json())
-    .then((data => results = data[0]))
-    .catch(function() {
-        console.log("AAA");
-        res.redirect(404, "http://localhost:8080/");
-        return;
-    });
 
+    .then((response) => {
+        statusCode = response.status
+        return response.json()
+    })
+    .then((data => results = data[0])) 
+
+    if (statusCode != 200) {
+        res.render("error", {statusCode});
+        return;
+    }
     res.render("product", { results });
 })
 
@@ -47,10 +60,20 @@ app.get("/orderDetails", async function (req, res) {
     var prices = [];
     var qtyPrices = [];
     var qty = [];
+
+    var statusCode = 200
     for (var product in cart) {
         const productQuery = await fetch("http://localhost:3000/products/" + product)
-        .then((response) => response.json())
+        .then((response) => {
+            statusCode = response.status
+            return response.json()
+        })
         .then((data => results = data[0]));
+
+        if (statusCode != 200) {
+            res.render("error", {statusCode});
+            return;
+        }
 
         names.push(productQuery.productName);
         images.push(productQuery.productImgName);
@@ -74,8 +97,16 @@ app.get("/cart", async function (req, res) {
     var qty = [];
     for (var product in cart) {
         const productQuery = await fetch("http://localhost:3000/products/" + product)
-        .then((response) => response.json())
+        .then((response) => {
+            statusCode = response.status
+            return response.json()
+        })
         .then((data => results = data[0]));
+
+        if (statusCode != 200) {
+            res.render("error", {statusCode});
+            return;
+        }
 
         names.push(productQuery.productName);
         images.push(productQuery.productImgName);
@@ -88,9 +119,9 @@ app.get("/cart", async function (req, res) {
     res.render("cart", { cart, images, qty, qtyPrices, totalPrice, names, prices });
 })
 
-app.get("/add", (req, res) => {
-    res.render("cart");
-})
+// app.get("/add", (req, res) => {
+//     res.render("cart");
+// })
 
 
 app.get("/error", (req, res) => {

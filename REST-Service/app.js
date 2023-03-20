@@ -19,28 +19,21 @@ app.use(bodyParser.json());
 
 app.get('/products', async function(req, res) {
     const results = await db.query("SELECT * FROM products");
-    if (results && results.length > 0) {
-        res.json(results);
+    if (!results && results.length == 0) {
+        res.statusCode = 404;
     }
-    else {
-        res.status(404).send('404 Error: Product Not Found');
-    }
-    // res.json(results);
+    res.json(results);
 });
 
 app.get('/products/:id', async function(req, res) {
+    // res.status(404);
+    // res.statusCode = 404;
     const productID = req.params.id;
     const results = await db.query("SELECT * FROM products WHERE productID = " + mysql.escape(productID));
-    if (results && results.length > 0) {
-        res.json(results);
+    if (productID < 0 || productID > 9) {
+        res.statusCode = 404;
     }
-    else {
-        console.log("AAAAAAAAAA")
-        // res.status(404).send('404 Error: Product Not Found');
-        // res.redirect("http://localhost:8080/error");
-        res.sendStatus(404);
-    }
-    // res.json(results);
+    res.json(results);
 });
 
 app.post('/order', (req, res) => {
@@ -81,9 +74,12 @@ app.post('/order', (req, res) => {
 
 app.get('/recents', async function(req, res) {
     const recentOrders = await db.query("SELECT * FROM orders ORDER BY orderNumber DESC");
-    if (recentOrders && recentOrders.length > 0) {
-        let recentProducts = new Set();
+    let recentProducts = new Set();
 
+    if (!recentOrders) {
+        res.statusCode = 404;
+    }
+    else {
         for (var i = 0; (i < recentOrders.length && recentProducts.size < 5) ; i++) {
             const regex = /(.)(?=:)/g;
             var orderContents = recentOrders[i].orderItems;
@@ -95,12 +91,8 @@ app.get('/recents', async function(req, res) {
                 }
             }
         }
-
-        res.json(Array.from(recentProducts));
     }
-    else {
-        res.sendStatus(404);
-    }
+    res.json(Array.from(recentProducts));
 });
 
 app.get('/city', async function(req, res) {
@@ -112,12 +104,16 @@ app.get('/city', async function(req, res) {
     `;
 
     const results = await db.query(query);
-    if (results && results.length > 0) {
-        res.json(results);
+    // if (results && results.length > 0) {
+    //     res.json(results);
+    // }
+    // else {
+    //     res.sendStatus(404);
+    // }
+    if (!results && results.length == 0) {
+        res.statusCode = 404;
     }
-    else {
-        res.sendStatus(404);
-    }
+    res.json(results);
 });
 
 app.get('/zip', async function(req, res) {
@@ -129,12 +125,16 @@ app.get('/zip', async function(req, res) {
     `;
 
     const results = await db.query(query);
-    if (results && results.length > 0) {
-        res.json(results);
+    // if (results && results.length > 0) {
+    //     res.json(results);
+    // }
+    // else {
+    //     res.sendStatus(404);
+    // }
+    if (!results && results.length == 0) {
+        res.statusCode = 404;
     }
-    else {
-        res.sendStatus(404);
-    }
+    res.json(results);
 });
 
 app.get('/mostRecentOrder', async function(req, res) {
@@ -145,12 +145,16 @@ app.get('/mostRecentOrder', async function(req, res) {
     `;
 
     const results = await db.query(query);
-    if (results && results.length > 0) {
-        res.json(results);
+    // if (results && results.length > 0) {
+    //     res.json(results);
+    // }
+    // else {
+    //     res.sendStatus(404);
+    // }
+    if (!results && results.length == 0) {
+        res.statusCode = 404;
     }
-    else {
-        res.sendStatus(404);
-    }
+    res.json(results);
 });
 
 app.post('/review', async function(req, res) {

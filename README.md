@@ -20,6 +20,6 @@ Requirement 1:
 As per Bhavaya, Express and ndoejs was allowed for this assignment. Our website instead uses Express and EJS in place of Servlets and JSP. We attempted to emulate JSP's feature of allowing Java code in the JSP file by doing the same for EJS files. 
 
 Requirement 2:
-AJAX is called when the user begins filling in the form on the cart page. Specifically, when the user begins entering in either their city or zip code, AJAX calls are made to assist the user by providing possible terms that change as the user enters in more characters.
+Fetch is called instead of AJAX when the user begins filling in the form on the cart page. Specifically, when the user begins entering in either their city or zip code, fetch calls are made to assist the user by providing possible terms that change as the user enters in more characters.
 
 
